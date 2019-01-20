@@ -5,55 +5,51 @@ function Book(title, author, isbn) {
 	this.isbn = isbn;
 }
 
+// Ui Constructor
+function UI() { }
 
-// UI Constructor
-function UI() { };
-
-
-UI.prototype.addBookToList = function (bookList) {
+UI.prototype.addBookToList = function (newBook) {
 	const list = document.getElementById('book-list');
-	/// Create tr element
+
+	// Create Element
 	const row = document.createElement('tr');
 
-	// insert rows
-
-	row.innerHTML = `
-	<td>${bookList.title}</td>
-	<td>${bookList.author}</td>
-	<td>${bookList.isbn}</td>
+	// insert calls
+	row.innerHTML =
+		`<td>${newBook.title}</td>
+	<td>${newBook.author}</td>
+	<td>${newBook.isbn}</td>
 	<td><a href="#" class="delete">X</a></td>`;
-
 	list.appendChild(row);
-	console.log(row)
 }
-// Clear Fields
+
 UI.prototype.clearFields = function () {
-	document.getElementById('title').value = "";
-	document.getElementById('author').value = "";
-	document.getElementById('isbn').value = "";
+	document.getElementById('title').value = '';
+	document.getElementById('author').value = '';
+	document.getElementById('isbn').value = '';
 }
 
-//Event Listener
+
+
+// Event Listeners
 document.getElementById('book-form').addEventListener('submit', function (e) {
-	const title = document.getElementById('title').value,
-		author = document.getElementById('author').value,
-		isbn = document.getElementById('isbn').value;
+	// Get Values
+	const title = document.getElementById('title').value;
+	const author = document.getElementById('author').value;
+	const isbn = document.getElementById('isbn').value;
 
 
-	//// Instatiate new Book
-	const bookList = new Book(title, author, isbn);
+	// Instantiating new Book
+	const newBook = new Book(title, author, isbn);
 
-
-	/// Instatiate UI
+	// Instatiate UI 
 	const ui = new UI();
 
-	// Add Book to list
+	// prototype
+	ui.addBookToList(newBook);
 
-	ui.addBookToList(bookList);
-
-	// cleear fields method
+	// Clear Input fields
 	ui.clearFields();
 
-
 	e.preventDefault();
-})
+});
