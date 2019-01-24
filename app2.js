@@ -54,6 +54,44 @@ class UI {
 	}
 }
 
+// Local Stroage Class
+class Store {
+	static getBooks() {
+		let books;
+		if (localStorage.getItem('books') === null) {
+			books = [];
+		} else {
+			books = JSON.parse(localStroage.getItem('books'));
+		}
+
+		return books;
+	}
+
+	static displayBooks() {
+		const books = Stor.getBooks();
+
+		book.foreach(function (book) {
+			const ui = new UI;
+
+			// Add book UI
+			ui.addBookToLost(book);
+		});
+	}
+
+	static addBook(book) {
+		const books = Store.getBooks();
+
+		books.push(book);
+
+		localStroage.setItem('books', JSON.stringify(books));
+	}
+
+	static removeBook() {
+
+	}
+
+}
+
 // Event Listeners for adding
 
 document.getElementById('book-form').addEventListener('submit', function (e) {
@@ -73,7 +111,10 @@ document.getElementById('book-form').addEventListener('submit', function (e) {
 		ui.showAlert('Please fill in all fields', 'error');
 	} else {
 		// Add book tot list pass const  newbook 
-		ui.createBook(newBook)
+		ui.createBook(newBook);
+
+		//Add to local Storage
+		Store.addBook(book);
 
 		// Show success
 		ui.showAlert('Book Added', 'success');
